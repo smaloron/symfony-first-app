@@ -1,0 +1,7 @@
+{
+  "name": "sf-first-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Sebastien Maloron <contact@smaloron.eu>",
+  "license": "MIT"
+}

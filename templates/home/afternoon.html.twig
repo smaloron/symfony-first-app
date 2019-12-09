@@ -1,0 +1,15 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <h1>Bonne après midi {{ name }}</h1>
+    <ul>
+        {% for item in fruitList %}
+            <li> {{ item }} </li>
+        {% endfor %}
+    </ul>
+    <p>Le premier élément : {{ fruitList[0] }}</p>
+    <p>Il y a {{ fruitList | length }} fruits</p>
+    <p>{{ 5 + 8 }}</p>
+{% endblock %}
+
+{% block title %} Good afternoon {% endblock %}
