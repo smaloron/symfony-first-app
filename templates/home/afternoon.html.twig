@@ -10,6 +10,17 @@
     <p>Le premier élément : {{ fruitList[0] }}</p>
     <p>Il y a {{ fruitList | length }} fruits</p>
     <p>{{ 5 + 8 }}</p>
+
+    <a href="{{ path('homepage') }}">Lien vers homepage</a>
 {% endblock %}
 
 {% block title %} Good afternoon {% endblock %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+    </style>
+{% endblock %}

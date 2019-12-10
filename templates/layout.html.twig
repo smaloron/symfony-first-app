@@ -5,10 +5,20 @@
     <title>
         {% block title %} Titre par défaut {% endblock %}
     </title>
+
+    {% block stylesheet %}
+        <link rel="stylesheet" href="/yarn-assets/bootstrap/dist/css/bootstrap.min.css">
+    {% endblock %}
 </head>
-<body>
+<body class="container-fluid">
 
-    {% block content %}{% endblock %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
 
+    {% block js %}
+    {% endblock %}
 </body>
 </html>
