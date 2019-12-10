@@ -23,7 +23,7 @@ class HomeController extends AbstractController
      * @return Response
      */
     public function index(){
-        return new Response("Hello Symfony");
+        return $this->render("home/index.html.twig", ["message"=>"Hello Symfony"]);
     }
 
     /**
