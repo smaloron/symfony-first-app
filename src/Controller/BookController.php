@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
@@ -27,11 +28,23 @@ class BookController extends AbstractController
 
     /**
      * @Route("/book/new")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createBook(){
+    public function createBook(Request $request){
 
         $book = new Book();
         $form = $this->createForm(BookType::class, $book);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($book);
+            $em->flush();
+
+            return $this->redirectToRoute("book-list");
+        }
 
         return $this->render("book/new.html.twig", [
             "bookForm" => $form->createView()
