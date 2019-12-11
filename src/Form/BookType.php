@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Book;
+use App\Entity\Publisher;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -20,6 +22,10 @@ class BookType extends AbstractType
             ->add('author', TextType::class, ["label" => "Auteur"])
             ->add('price', NumberType::class,
                 ["label" => "Prix", "html5" => true, "attr" =>["min" => "1", "max" => "999.99", "step" =>".5"] ])
+            ->add('publisher', EntityType::class, [
+                'class' => Publisher::class,
+                'choice_label' => 'name'
+            ])
             ->add('submit', SubmitType::class,
                 ["label" => "Valider", "attr" => ["class" => "btn btn-success"]])
         ;

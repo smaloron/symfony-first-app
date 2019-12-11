@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Book;
+use App\Entity\Publisher;
 use App\Form\BookType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,13 +28,21 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/new")
+     * @Route("/book/new", name="book-create")
+     * @Route("/book/edit/{id}", name="book-edit")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createBook(Request $request){
+    public function createOrEditBook(Request $request, $id=null){
 
-        $book = new Book();
+        if($id == null){
+            $book = new Book();
+        } else {
+            $book = $this   ->getDoctrine()
+                            ->getRepository(Book::class)
+                            ->find($id);
+        }
+
         $form = $this->createForm(BookType::class, $book);
 
         $form->handleRequest($request);
