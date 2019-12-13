@@ -26,4 +26,14 @@ class ArticleController extends AbstractController
             'articleList' => $articleList,
         ]);
     }
+
+    /**
+     * @Route("/{id}", name="article-details")
+     */
+    public function details(Article $article){
+
+        return $this->render('article/details.html.twig', [
+            'article' => $article
+        ]);
+    }
 }

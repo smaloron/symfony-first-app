@@ -1,0 +1,32 @@
+{%  extends 'layout.html.twig' %}
+
+{% block content %}
+
+    <section>
+        <article>
+            <h1>{{ article.title }}</h1>
+            <p>
+                le : {{ article.createdAt | date('d/m/Y') }}
+                par {{ article.author.fullName }}
+            </p>
+
+            <p>
+                {{ article.articleText }}
+            </p>
+        </article>
+
+        <hr>
+        <h3>Il y a {{ article.comments | length }} commentaire(s)</h3>
+
+        <div>
+            {% for comment in article.comments %}
+                <div>
+                    <h4>Le {{ comment.createdAt | date('d/m/Y') }} par {{ comment.author }}</h4>
+                    <p>{{ comment.commentText }}</p>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

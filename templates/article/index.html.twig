@@ -13,8 +13,12 @@
 
         {% for article in articleList %}
             <tr>
-                <td>{{ article.title }}</td>
-                <td> {{ article.author.name }} </td>
+                <td>
+                    <a href="{{ path('article-details', {'id': article.id}) }}">
+                        {{ article.title }}
+                    </a>
+                </td>
+                <td> {{ article.author.fullName }} </td>
                 <td> {{ article.comments | length }}</td>
             </tr>
         {% endfor %}

@@ -100,5 +100,12 @@ class Author
         return $this;
     }
 
+    public function getFullName(){
+        $fullName = "";
+        if(! empty($this->firstName)){
+           $fullName = $this->firstName. " ";
+        }
 
+        return $fullName . strtoupper($this->name);
+    }
 }
