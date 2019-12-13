@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Form\ArticleType;
 use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,7 +34,11 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="article-details")
+     * @Route("/{id}", name="article-details", requirements={"id"="\d+"})
+     * @param Article $article
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @throws \Exception
      */
     public function details(Article $article, Request $request){
 
@@ -56,6 +63,22 @@ class ArticleController extends AbstractController
         return $this->render('article/details.html.twig', [
             'article' => $article,
             'commentForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/new", name="article-new")
+     * @param Request $request
+     * @param null $id
+     * @return Response
+     */
+    public function addOrEdit(Request $request, $id=null){
+        $article = new Article();
+
+        $form = $this->createForm(ArticleType::class, $article);
+
+        return $this->render('article/form.html.twig', [
+            'articleForm' => $form->createView()
         ]);
     }
 }
