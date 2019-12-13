@@ -18,14 +18,19 @@
         <hr>
         <h3>Il y a {{ article.comments | length }} commentaire(s)</h3>
 
-        <div>
-            {% for comment in article.comments %}
-                <div>
-                    <h4>Le {{ comment.createdAt | date('d/m/Y') }} par {{ comment.author }}</h4>
-                    <p>{{ comment.commentText }}</p>
-                    <hr>
-                </div>
-            {% endfor %}
+        <div class="row">
+            <div class="col-md-4">
+                {{ form(commentForm) }}
+            </div>
+            <div class="col-md-8">
+                {% for comment in article.comments %}
+                    <div>
+                        <h4>Le {{ comment.createdAt | date('d/m/Y') }} par {{ comment.author }}</h4>
+                        <p>{{ comment.commentText }}</p>
+                        <hr>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 
