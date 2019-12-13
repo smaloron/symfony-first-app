@@ -42,7 +42,3 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 }
-/*
-Composer require validator
-composer require security-csrf
-*/
