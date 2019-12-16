@@ -1,4 +1,7 @@
 {
+    "components/jquery": {
+        "version": "3.4.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -399,6 +402,9 @@
     },
     "twig/twig": {
         "version": "v3.0.0"
+    },
+    "twitter/bootstrap": {
+        "version": "v4.4.1"
     },
     "zendframework/zend-code": {
         "version": "3.4.0"

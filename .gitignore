@@ -7,5 +7,5 @@
 /var/
 /vendor/
 /.idea/
-/public/yarn-assets/
+/public/build/
 ###< symfony/framework-bundle ###

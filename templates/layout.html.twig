@@ -6,15 +6,17 @@
         {% block title %} Titre par défaut {% endblock %}
     </title>
 
-    {% block stylesheet %}
-        <link rel="stylesheet" href="/yarn-assets/bootstrap/dist/css/bootstrap.min.css">
+    {% block css %}
+        {{ encore_entry_link_tags('style') }}
     {% endblock %}
 </head>
 <body class="container-fluid">
 
+    {% include '_navbar.html.twig' %}
+
     {% if app.session.flashbag.peek('success') %}
         <div class="row justify-content-center">
-            <div class="col-md-6 mt-2">
+            <div class="col-md-6 mt-5">
                 {% for message in app.flashes('success') %}
                     <div class="alert alert-success">
                         {{ message }}
@@ -24,13 +26,15 @@
         </div>
     {% endif %}
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center content">
         <div class="col-md-8">
             {% block content %}{% endblock %}
         </div>
     </div>
 
     {% block js %}
+        {{ encore_entry_script_tags('app') }}
+
     {% endblock %}
 </body>
 </html>
