@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\Author;
+use App\Form\DataTransformer\TagCollectionToStringDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -15,6 +16,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArticleType extends AbstractType
 {
+    /**
+     * @var TagCollectionToStringDataTransformer
+     */
+    private $tagTransformer;
+
+    /**
+     * ArticleType constructor.
+     * @param TagCollectionToStringDataTransformer $tagTransformer
+     */
+    public function __construct(TagCollectionToStringDataTransformer $tagTransformer)
+    {
+        $this->tagTransformer = $tagTransformer;
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -40,6 +56,8 @@ class ArticleType extends AbstractType
                 'attr' => ['class' => 'btn btn-primary']
             ])
         ;
+
+        $builder->get('tags')->addModelTransformer($this->tagTransformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)

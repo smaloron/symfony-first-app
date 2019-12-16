@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Author;
 use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Form\CommentType;
@@ -28,9 +29,36 @@ class ArticleController extends AbstractController
             ->getRepository(Article::class)
             ->findAll();
 
-        return $this->render('article/index.html.twig', [
-            'articleList' => $articleList,
-        ]);
+        $params = $this->getTwigParametersWithAside(
+            ['articleList' => $articleList, 'pageTitle' => '']
+        );
+
+        return $this->render('article/index.html.twig', $params);
+    }
+
+    /**
+     * @Route("/by-author/{id}", name="article-by-author")
+     */
+    public function showByAuthor(Author $author){
+        $articleList = $this->getDoctrine()
+                            ->getRepository(Article::class)
+                            ->getAllByAuthor($author);
+
+        $params = $this->getTwigParametersWithAside(
+            ['articleList' => $articleList, 'pageTitle' => "de l'auteur : ". $author->getFullName()]
+        );
+
+        return $this->render('article/index.html.twig', $params);
+    }
+
+    private function getTwigParametersWithAside($data){
+        $asideData = [
+            'authorList' => $this->getDoctrine()
+                ->getRepository(Author::class)
+                ->findAll()
+        ];
+
+        return array_merge($data, $asideData );
     }
 
     /**
@@ -76,6 +104,18 @@ class ArticleController extends AbstractController
         $article = new Article();
 
         $form = $this->createForm(ArticleType::class, $article);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+
+            $this->addFlash('success', "Votre article a été ajouté");
+
+            return $this->redirectToRoute('article-list');
+        }
 
         return $this->render('article/form.html.twig', [
             'articleForm' => $form->createView()

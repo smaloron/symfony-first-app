@@ -42,7 +42,7 @@ class Article
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag")
+     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
      * @var ArrayCollection | Tag[]
      */
     private $tags;

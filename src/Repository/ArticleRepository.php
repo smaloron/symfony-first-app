@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Author;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,6 +18,17 @@ class ArticleRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
+    }
+
+    public function getAllByAuthor(Author $author){
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->join('a.author', 'auth')
+            ->where('auth.id = :id')
+            ->setParameter('id', $author->getId())
+            ->orderBy('a.createdAt','DESC')
+            ;
+        return $qb->getQuery()->getResult();
     }
 
     // /**
