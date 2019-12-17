@@ -23,6 +23,9 @@ security:
                 login_path: security-login
                 check_path: author-login-check
                 default_target_path: article-list
+            logout:
+                path: logout
+                target: homepage
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

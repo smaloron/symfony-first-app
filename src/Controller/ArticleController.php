@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/article")
@@ -96,12 +97,16 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/new", name="article-new")
+     * @IsGranted("ROLE_AUTHOR")
      * @param Request $request
      * @param null $id
      * @return Response
      */
     public function addOrEdit(Request $request, $id=null){
         $article = new Article();
+        $article->setAuthor($this->getUser());
+        //Equivalent de @IsGranted dans les annotations
+        //$this->denyAccessUnlessGranted('ROLE-AUTHOR');
 
         $form = $this->createForm(ArticleType::class, $article);
 

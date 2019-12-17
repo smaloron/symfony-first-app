@@ -8,4 +8,5 @@
 /vendor/
 /.idea/
 /public/build/
+/node_modules/
 ###< symfony/framework-bundle ###

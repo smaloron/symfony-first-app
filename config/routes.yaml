@@ -5,4 +5,7 @@
 author-login-check:
   path: /author-login-check
 
+logout:
+  path: /logout
+
 

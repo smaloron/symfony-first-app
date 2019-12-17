@@ -44,12 +44,14 @@ class ArticleType extends AbstractType
                 [   'label'=>'Texte',
                     'attr'=> ['rows'=>'15']
                 ])
+            /*
             ->add('author', EntityType::class, [
                 'class' => Author::class,
                 'choice_label' => 'fullName',
                 'multiple' => false,
                 'expanded' => false
             ])
+            */
             ->add('tags', TextType::class, ['label' => 'Liste des tags'])
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',

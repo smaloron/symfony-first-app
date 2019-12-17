@@ -30,6 +30,20 @@
                 </div>
             </li>
 
+            {% if  app.user.username is defined %}
+                <li class="nav-item navbar-text">
+                    {{ app.user.username }}
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('logout') }}">logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('security-login') }}">login</a>
+                </li>
+            {% endif %}
+
         </ul>
     </div>
 </nav>

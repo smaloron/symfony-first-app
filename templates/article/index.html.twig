@@ -4,11 +4,13 @@
 
     <h1 class="mt-2">Liste des articles {{ pageTitle }}</h1>
 
-    <div class="text-right mb-2">
-        <a href="{{ path('article-new') }}" class="btn btn-primary">
-            Nouvel article
-        </a>
-    </div>
+    {% if is_granted('ROLE_AUTHOR') %}
+        <div class="text-right mb-2">
+            <a href="{{ path('article-new') }}" class="btn btn-primary">
+                Nouvel article
+            </a>
+        </div>
+    {% endif %}
 
     <table class="table table-striped">
         <tr>
