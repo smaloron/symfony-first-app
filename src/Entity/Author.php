@@ -5,11 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
  */
-class Author
+class Author implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -33,6 +34,18 @@ class Author
      * @var ArrayCollection
      */
     private $articles;
+
+    /**
+     * @ORM\Column(type="string", length=128, name="pwd")
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     * @var string
+     */
+    private $email;
 
 
     public function __construct()
@@ -107,5 +120,64 @@ class Author
         }
 
         return $fullName . strtoupper($this->name);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return ['ROLE_AUTHOR'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }
