@@ -1,6 +1,12 @@
+<div>
+    Il y a {{ articleList.getTotalItemCount() }} résultats
+</div>
+
 <table class="table table-striped">
     <tr>
-        <th>Titre</th>
+        <th>
+            {{ knp_pagination_sortable(articleList, 'Titre', 'a.title') }}
+        </th>
         <th>Auteur</th>
         <th>Commentaires</th>
         <th>Actions</th>
@@ -25,3 +31,7 @@
         </tr>
     {% endfor %}
 </table>
+
+<div class="navigation">
+    {{ knp_pagination_render(articleList) }}
+</div>
