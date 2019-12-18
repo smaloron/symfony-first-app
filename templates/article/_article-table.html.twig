@@ -1,0 +1,27 @@
+<table class="table table-striped">
+    <tr>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Commentaires</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for article in articleList %}
+        <tr>
+            <td>
+                <a href="{{ path('article-details', {'id': article.id}) }}">
+                    {{ article.title }}
+                </a>
+            </td>
+            <td> {{ article.author.fullName }} </td>
+            <td> {{ article.comments | length }}</td>
+            <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('article-delete', {'id': article.id}) }}">
+                        Supprimer
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
