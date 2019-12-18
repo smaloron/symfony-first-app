@@ -3,21 +3,31 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Repository\ArticleRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
     /**
      * @Route("/admin", name="admin_index")
+     * @param PaginatorInterface $paginator
+     * @param ArticleRepository $repository
+     * @param Request $request
+     * @return Response
      */
-    public function index()
+    public function index(PaginatorInterface $paginator, ArticleRepository $repository, Request $request)
     {
-        $articleList = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findAll();
+        $articleList = $paginator->paginate(
+            $repository->getAllArticles(),
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('admin/index.html.twig', [
             'articleList' => $articleList,

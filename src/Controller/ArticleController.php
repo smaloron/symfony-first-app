@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @Route("/article")
+ * @Route("/{_locale}/article", locale="en|fr")
  * Class ArticleController
  * @package App\Controller
  */

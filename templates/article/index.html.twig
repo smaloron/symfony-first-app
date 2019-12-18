@@ -2,7 +2,8 @@
 
 {% block content %}
 
-    <h1 class="mt-2">Liste des articles {{ pageTitle }}</h1>
+    <h1 class="mt-2">
+        {{ 'articles_list' | trans }} {{ pageTitle }}</h1>
 
     {% if is_granted('ROLE_AUTHOR') %}
         <div class="text-right mb-2">
