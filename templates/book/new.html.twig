@@ -1,7 +1,72 @@
 {% extends "layout.html.twig" %}
 
+{% block css %}
+    {{ parent() }}
+    <style>
+        #template {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     {# Un commentaire #}
-    {{ form(bookForm) }}
+    <div id="template" style="display: none">
+        {{ form_widget(bookForm.authors.vars.prototype) }}
+    </div>
 
+
+    {{ form_start(bookForm) }}
+
+        <div class="row">
+            <div class="col">
+
+                {{ form_row(bookForm.title) }}
+            </div>
+            <div class="col">
+                {{ form_row(bookForm.price) }}
+                {{ form_row(bookForm.publisher) }}
+            </div>
+        </div>
+
+        <fieldset>
+            <legend>Liste des auteurs</legend>
+            <button type="button" class="add-author btn btn-primary">Ajouter un auteur</button>
+            <ul id="author-list"></ul>
+        </fieldset>
+
+
+
+    {{ form_end(bookForm) }}
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script>
+
+        $(document).ready(function () {
+            //Cibles
+            $container = $("#author-list");
+            $addButton = $('.add-author');
+            $template = $("#template");
+
+            var authorFormIndex = $container.find("div[id^='book_authors']").length;
+
+            $addButton.click(function () {
+                template = $template.clone().removeAttr("id").show().html();
+
+                template = template.replace(/__name__/g, authorFormIndex);
+
+                authorFormIndex++;
+
+                $container.append(template);
+
+            });
+
+        });
+
+
+    </script>
 {% endblock %}

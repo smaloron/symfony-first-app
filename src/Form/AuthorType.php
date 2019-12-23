@@ -14,6 +14,8 @@ class AuthorType extends AbstractType
         $builder
             ->add('name')
             ->add('firstName')
+            ->add('email')
+            ->add('password')
         ;
     }
 

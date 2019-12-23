@@ -26,7 +26,13 @@
         {%  for book in bookList %}
             <tr>
                 <td>{{ book.title }}</td>
-                <td>{{ book.author }}</td>
+                <td>
+                    {%  if book.authors is  defined %}
+                        {% for author in book.authors %}
+                            {{ author.fullName }}
+                        {% endfor %}
+                    {% endif %}
+                </td>
                 <td>{{ book.publisher.name }}</td>
                 <td>{{ book.price }}</td>
                 <td>
