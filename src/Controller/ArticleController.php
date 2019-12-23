@@ -10,6 +10,7 @@ use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -130,6 +131,24 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            //Gestion de l'upload des photos
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['photoInput']->getData();
+
+            if ($uploadedFile){
+                //Définition du nouveau nom de fichier
+                $newFileName = uniqid('photo_').'.'. $uploadedFile->guessExtension();
+                //Déplacement de l'upload dans son dossier de destination
+                $uploadedFile->move(
+                    $this->getParameter('article.photo.path'),
+                    $newFileName
+                );
+                //Ecriture du nom du fichier dans l'entité
+                $article->setPhoto($newFileName);
+            }
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();

@@ -16,6 +16,8 @@ Encore
     ])
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
+
+    .autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();

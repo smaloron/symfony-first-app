@@ -52,6 +52,12 @@ class Article
      */
     private $articleText;
 
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     * @var string
+     */
+    private $photo;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -164,6 +170,18 @@ class Article
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
         }
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

@@ -8,11 +8,14 @@ use App\Form\DataTransformer\TagCollectionToStringDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Component\Validator\Constraints\File as AssertFile;
 
 class ArticleType extends AbstractType
 {
@@ -53,6 +56,23 @@ class ArticleType extends AbstractType
             ])
             */
             ->add('tags', TextType::class, ['label' => 'Liste des tags'])
+
+            ->add('photoInput', FileType::class, [
+                'label' => 'Télécharger le photo',
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new AssertFile([
+                        'maxSize'=> '1024k',
+                        'mimeTypes' => [
+                            'image/png', 'image/jpeg', 'image/gif'
+                        ],
+                        'maxSizeMessage' => 'Vous devez choisir un fichier de 5 Mo maximum',
+                        'mimeTypesMessage' => 'Seuls les fichier image web sont autorisés'
+                    ])
+                ]
+            ])
+
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',
                 'attr' => ['class' => 'btn btn-primary']
@@ -60,6 +80,8 @@ class ArticleType extends AbstractType
         ;
 
         $builder->get('tags')->addModelTransformer($this->tagTransformer);
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
